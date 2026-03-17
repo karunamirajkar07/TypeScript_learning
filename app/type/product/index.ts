@@ -14,5 +14,10 @@ export interface ProductAPIList {
 
 }
 
+export interface ProductAPIRequet{
+    page:number,
+    search:string,
+    limit:number
+}
 
 
