@@ -2,35 +2,31 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React from 'react'
+import { ProductAPIList } from '../type/product'
+import { APIEndPoints } from '../endPoints'
 
 export default function ReactQuery() {
 
-    interface Product {
-        id: number
-        title: string
-        category: string
-    }
-
-    const fetchData = async (): Promise<Product[]> => {
-        const data = await axios.get("https://6776460912a55a9a7d0b1821.mockapi.io/product")
-        return data.data
-        }
-
-    const { data } = useQuery<Product[]>({
+    const { data } = useQuery<ProductAPIList[]>({
         queryKey: ["product"],
-        queryFn: fetchData
+        queryFn: async()=>{
+            const response =await fetch(APIEndPoints.ProductAPI.ProductList)
+            return response.json()
+        }
     })
-return (
-    <div>
-        <ul>
-            {data?.map((x) => (
-                <div>
+    return (
+        <div>
+            <ul>
+                {data?.map((x) => (
+                    <li key={x.id}>
+                        <h3>{x.title}</h3>
+                        <p>{x.category}</p>
+                        <p>₹{x.price}</p>
+                        <img src={x.imageURL} alt={x.title} width={100} />
+                    </li>
 
-                    <li key={x.id}>{x.title}</li>
-                    <li key={x.category}>{x.category}</li>
-                </div>
-            ))}
-        </ul>
-    </div>
-)
+                ))}
+            </ul>
+        </div>
+    )
 }
