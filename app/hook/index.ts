@@ -1,6 +1,6 @@
 "use client"
 
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query"
 import { APIEndPoints } from "../endPoints"
 import { ProductAPIRequet } from "../type/product"
 
@@ -16,6 +16,7 @@ export const useProductData = (request:ProductAPIRequet) => {
         staleTime: 50000,
         retry :3,
         retryDelay: 100,
+        placeholderData : keepPreviousData
     })
 
 
@@ -24,5 +25,6 @@ export const useProductData = (request:ProductAPIRequet) => {
         productData: productQuery.data,
         isLoading: productQuery.isLoading,
         error: productQuery.error,
+        isFetching : productQuery.isFetching
     }
 }

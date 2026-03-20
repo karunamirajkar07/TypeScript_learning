@@ -15,7 +15,7 @@ export default function ReactQuery() {
         limit: limit,
         search: debouncedSearch
     }
-    const { productData, isLoading, error } = useProductData(payload);
+    const { productData, isLoading, error,isFetching } = useProductData(payload);
     
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -59,7 +59,9 @@ export default function ReactQuery() {
                 <button onClick={() => setPage((p) => p + 1)}>
                     Next
                 </button>
+
             </div>
+            {isFetching && <p>Loading new page...</p>}
         </div>
     )
 }
