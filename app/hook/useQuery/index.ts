@@ -1,8 +1,8 @@
 "use client"
 
 import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query"
-import { APIEndPoints } from "../endPoints"
-import { ProductAPIRequet } from "../type/product"
+import { APIEndPoints } from "../../endPoints"
+import { ProductAPIRequet } from "../../type/product"
 
 export const useProductData = (request:ProductAPIRequet) => {
 

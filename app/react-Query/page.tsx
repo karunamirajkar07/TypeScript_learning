@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { useProductData } from "../hook"
+import { useProductData } from "../hook/useQuery"
 import { ProductAPIList } from "../type/product"
 export default function ReactQuery() {
 
