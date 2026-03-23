@@ -43,40 +43,46 @@ export default function page() {
 
     return (
         <div>
-            <div>
+            <div className='flex justify-center items-center m-4 bg-[#105fa3] text-white text-2xl h-[60px]'>
+                <h1>Use-Form Hook </h1>
+            </div>
+            <div className="grid grid-col-12">
                 <form>
-                    <div>
-                        <input
-                            value={FormName}
-                            onChange={(e) => { setValue("name", e.target.value, { shouldValidate: true }) }}
-                            placeholder="Enter name"
-                        />
-                        {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+                    <div className='grid grid-col-6'>
+                        <div>
+                            <input
+                                value={FormName}
+                                onChange={(e) => { setValue("name", e.target.value, { shouldValidate: true }) }}
+                                placeholder="Enter name"
+                            />
+                            {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+                        </div>
+                        <div>
+                            <input
+                                value={Formage}
+                                type='number'
+                                onChange={(e) => { setValue("age", Number(e.target.value), { shouldValidate: true }) }}
+                                placeholder="Enter age"
+                            />
+                            {errors.age && <p style={{ color: 'red' }}>{errors.age.message}</p>}
+                        </div>
                     </div>
-                    <div>
-                        <input
-                            value={Formage}
-                            type='number'
-                            onChange={(e) => { setValue("age", Number(e.target.value), { shouldValidate: true }) }}
-                            placeholder="Enter age"
-                        />
-                        {errors.age && <p style={{ color: 'red' }}>{errors.age.message}</p>}
-                    </div>
-                    <div>
-                        <input
-                            value={FormState}
-                            onChange={(e) => { setValue("state", e.target.value) }}
-                            placeholder="Enter State"
-                        />
-                       
-                    </div>
-                    <div>
-                        <input
-                            value={FormCountry}
-                            onChange={(e) => { setValue("country", e.target.value) }}
-                            placeholder="Enter age"
-                        />
-                      
+                    <div className='grid grid-col-6'>
+                        <div className='inlin'>
+                            <input
+                                value={FormState}
+                                onChange={(e) => { setValue("state", e.target.value) }}
+                                placeholder="Enter State"
+                            />
+
+                        </div>
+                        <div>
+                            <input
+                                value={FormCountry}
+                                onChange={(e) => { setValue("country", e.target.value) }}
+                                placeholder="Enter age"
+                            />
+                        </div>
                     </div>
                 </form>
             </div>
