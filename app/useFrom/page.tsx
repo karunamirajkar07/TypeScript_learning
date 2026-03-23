@@ -46,42 +46,52 @@ export default function page() {
             <div className='flex justify-center items-center m-4 bg-[#105fa3] text-white text-2xl h-[60px]'>
                 <h1>Use-Form Hook </h1>
             </div>
-            <div className="grid grid-col-12">
+            <div className="">
                 <form>
-                    <div className='grid grid-col-6'>
-                        <div>
-                            <input
-                                value={FormName}
-                                onChange={(e) => { setValue("name", e.target.value, { shouldValidate: true }) }}
-                                placeholder="Enter name"
-                            />
-                            {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
-                        </div>
-                        <div>
-                            <input
-                                value={Formage}
-                                type='number'
-                                onChange={(e) => { setValue("age", Number(e.target.value), { shouldValidate: true }) }}
-                                placeholder="Enter age"
-                            />
-                            {errors.age && <p style={{ color: 'red' }}>{errors.age.message}</p>}
-                        </div>
-                    </div>
-                    <div className='grid grid-col-6'>
-                        <div className='inlin'>
-                            <input
-                                value={FormState}
-                                onChange={(e) => { setValue("state", e.target.value) }}
-                                placeholder="Enter State"
-                            />
+                    <div className='grid grid-cols-2 gap-5 m-5'>
+                        <div className='grid grid-cols-4 '>
+                            <div className='col-span-2 col-start-3'>
+                                <div>
+                                    <input
+                                        value={FormName}
+                                        onChange={(e) => { setValue("name", e.target.value, { shouldValidate: true }) }}
+                                        placeholder="Enter name"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+                                </div>
+                                <div className='mt-5'>
+                                    <input
+                                        value={FormState}
+                                        onChange={(e) => { setValue("state", e.target.value) }}
+                                        placeholder="Enter State"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                </div>
+                            </div>
 
                         </div>
-                        <div>
-                            <input
-                                value={FormCountry}
-                                onChange={(e) => { setValue("country", e.target.value) }}
-                                placeholder="Enter age"
-                            />
+                        <div className='grid grid-cols-4'>
+                            <div className='col-span-2 '>
+                                <div>
+                                    <input
+                                        value={Formage}
+                                        type='number'
+                                        onChange={(e) => { setValue("age", Number(e.target.value), { shouldValidate: true }) }}
+                                        placeholder="Enter age"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.age && <p style={{ color: 'red' }}>{errors.age.message}</p>}
+                                </div>
+                                <div className='mt-5'>
+                                    <input
+                                        value={FormState}
+                                        onChange={(e) => { setValue("state", e.target.value) }}
+                                        placeholder="Enter State"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
