@@ -85,8 +85,8 @@ export default function page() {
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        value={FormState}
-                                        onChange={(e) => { setValue("state", e.target.value) }}
+                                        value={FormCountry}
+                                        onChange={(e) => { setValue("country", e.target.value) }}
                                         placeholder="Enter State"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                                     />
