@@ -50,6 +50,8 @@ export default function ConfigureProduct() {
         formState: { errors }
     } = useForm<FormData>({
         resolver: zodResolver(FormValue),
+        mode: "onChange",
+        reValidateMode : "onChange", 
         defaultValues: {
             title: "",
             category: "",
@@ -126,49 +128,54 @@ export default function ConfigureProduct() {
                         <div className='grid grid-cols-4 '>
                             <div className='col-span-2 col-start-3'>
                                 <div>
+                                    <label >Enter Title: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormTitle}
                                         onChange={(e) => { setValue("title", e.target.value, { shouldValidate: true }) }}
                                         placeholder="Enter Title"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.title && <p style={{ color: 'red' }}>{errors.title.message}</p>}
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter Category: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormCategory}
-                                        onChange={(e) => { setValue("category", e.target.value) }}
+                                        onChange={(e) => { setValue("category", e.target.value),{ shouldValidate: true } }}
                                         placeholder="Enter Category"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.category && <p style={{ color: 'red' }}>{errors.category.message}</p>}
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter Brand: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={Formbrand}
-                                        onChange={(e) => { setValue("brand", e.target.value) }}
+                                        onChange={(e) => { setValue("brand", e.target.value),{ shouldValidate: true } }}
                                         placeholder="Enter Brand"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.brand && <p style={{ color: 'red' }}>{errors.brand.message}</p>}
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter MRP: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormMRP ?? ''}
                                         type='number'
-                                        onChange={(e) => { setValue("mrp", Number(e.target.value)) }}
+                                        onChange={(e) => { setValue("mrp", Number(e.target.value),{ shouldValidate: true }) }}
                                         placeholder="Enter MRP"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.mrp && <p style={{ color: 'red' }}>{errors.mrp.message}</p>}
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter Quantity: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={Formquantity ??''}
                                         type='number'
-                                        onChange={(e) => { setValue("quantity", Number(e.target.value)) }}
+                                        onChange={(e) => { setValue("quantity", Number(e.target.value) ,{ shouldValidate: true }) }}
                                         placeholder="Enter Quantity"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.quantity && <p style={{ color: 'red' }}>{errors.quantity.message}</p>}
                                 </div>
@@ -178,54 +185,59 @@ export default function ConfigureProduct() {
                         <div className='grid grid-cols-4'>
                             <div className='col-span-2 '>
                                 <div>
+                                <label >Enter Price: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormPrice ?? ""}
                                         type='number'
                                         onChange={(e) => { setValue("price", Number(e.target.value), { shouldValidate: true }) }}
                                         placeholder="Enter Price"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.price && <p style={{ color: 'red' }}>{errors.price.message}</p>}
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter Color: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormColour}
                                         type='text'
-                                        onChange={(e) => { setValue("color", e.target.value) }}
+                                        onChange={(e) => { setValue("color", e.target.value),{ shouldValidate: true } }}
                                         placeholder="Enter Color"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.color && <p style={{ color: 'red' }}>{errors.color.message}</p>}
 
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter Size: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormSize ?? ""}
                                         type='number'
-                                        onChange={(e) => { setValue("size", Number(e.target.value)) }}
+                                        onChange={(e) => { setValue("size", Number(e.target.value),{ shouldValidate: true }) }}
                                         placeholder="Enter Size"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.size && <p style={{ color: 'red' }}>{errors.size.message}</p>}
 
                                 </div>
 
                                 <div className='mt-5'>
+                                <label >Enter Description: <span className='text-red-400'>*</span></label>
                                     <input
-                                        value={Formdescription}
-                                        onChange={(e) => { setValue("description", e.target.value) }}
+                                        value={Formdescription ?? ""}
+                                        onChange={(e) => { setValue("description", e.target.value),{ shouldValidate: true } }}
                                         placeholder="Enter Description"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
 
                                 </div>
                                 <div className='mt-5'>
+                                <label >Enter Type: <span className='text-red-400'>*</span></label>
                                     <input
                                         value={FormType}
-                                        onChange={(e) => { setValue("type", e.target.value) }}
+                                        onChange={(e) => { setValue("type", e.target.value) ,{ shouldValidate: true } }}
                                         placeholder="Enter Type"
-                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mt-2'
                                     />
                                     {errors.type && <p style={{ color: 'red' }}>{errors.type.message}</p>}
 
