@@ -10,25 +10,44 @@ import { ProductAPIPostRequest } from '../type/product'
 export default function page() {
 
     const FormValue = z.object({
-        title: z.string().trim().
-            min(2, { message: " Name should have minimum 2 character." })
-            .max(100, { message: "Name should have maximum 100 character" }),
-            price: z.number()
-            .min(10, { message: "Age should not be less than 10 years." })
-            .positive()
-            .int(),
-        state: z.string().optional(),
-        country: z.string().optional(),
-        date : z.date().min((new Date("2000-01-01")))
-    })
+        title: z.string().trim()
+            .min(2, { message: "Title must be at least 2 characters" }),
+
+        category: z.string().trim()
+            .min(1, { message: "Category is required" }),
+
+        price: z.number()
+            .min(1, { message: "Price must be greater than 0" }),
+
+        mrp: z.number()
+            .min(1, { message: "MRP must be greater than 0" }),
+
+        brand: z.string().trim()
+            .min(1, { message: "Brand is required" }),
+
+        color: z.string().trim()
+            .min(1, { message: "Color is required" }),
+
+        size: z.number()
+            .min(1, { message: "Size is required" }),
+
+        description: z.string()
+            .min(2, { message: "Description must be at least 2 characters" }),
+
+        quantity: z.number()
+            .min(1, { message: "Quantity must be at least 1" }),
+
+        type: z.string().trim()
+            .min(1, { message: "Type is required" }),
+    });
 
     type FormData = z.infer<typeof FormValue>
 
-    const productPayload= () : ProductAPIPostRequest =>{
+    const productPayload = (): ProductAPIPostRequest => {
 
     }
 
-    const { createProductsData} = useCreateProductData(productPayload)
+    const { createProductsData } = useCreateProductData(productPayload)
 
     const {
         setValue,
@@ -39,19 +58,28 @@ export default function page() {
         resolver: zodResolver(FormValue),
         defaultValues: {
             title: "",
-            age: 0,
-            state: "",
-            country: "",
-            date : undefined
-
+            category: "",
+            price: undefined,
+            mrp: undefined,
+            brand: "",
+            color: "",
+            size: undefined,
+            description: "",
+            quantity: undefined,
+            type: ""
         }
     })
 
-    const FormName = watch("title")
-    const Formage = watch("age")
-    const FormState = watch("state")
-    const FormCountry = watch("country")
-    const FormDate = watch("date")
+    const FormTitle = watch("title")
+    const FormPrice = watch("price")
+    const FormCategory = watch("category")
+    const FormMRP = watch("mrp")
+    const Formbrand = watch("brand")
+    const FormColour = watch("color")
+    const FormSize = watch("size")
+    const Formdescription = watch("description")
+    const Formquantity = watch("quantity")
+    const FormType = watch("type")
 
     return (
         <div>
@@ -65,30 +93,48 @@ export default function page() {
                             <div className='col-span-2 col-start-3'>
                                 <div>
                                     <input
-                                        value={FormName}
+                                        value={FormTitle}
                                         onChange={(e) => { setValue("title", e.target.value, { shouldValidate: true }) }}
-                                        placeholder="Enter name"
+                                        placeholder="Enter Title"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                                     />
                                     {errors.title && <p style={{ color: 'red' }}>{errors.title.message}</p>}
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        value={FormState}
-                                        onChange={(e) => { setValue("state", e.target.value) }}
-                                        placeholder="Enter State"
+                                        value={FormCategory}
+                                        onChange={(e) => { setValue("category", e.target.value) }}
+                                        placeholder="Enter Category"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                                     />
+                                    {errors.category && <p style={{ color: 'red' }}>{errors.category.message}</p>}
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        type='date'
-                                        value={FormDate ? FormDate.toISOString().split("T")[0] : ""}
-                                        onChange={(e) => { setValue("date", new Date(e.target.value)) }}
-                                        placeholder="Enter State"
+                                        value={Formbrand}
+                                        onChange={(e) => { setValue("brand", e.target.value) }}
+                                        placeholder="Enter Brand"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                                     />
-                                      {errors.date && <p style={{ color: 'red' }}>{errors.date.message}</p>}
+                                    {errors.brand && <p style={{ color: 'red' }}>{errors.brand.message}</p>}
+                                </div>
+                                <div className='mt-5'>
+                                    <input
+                                        value={FormMRP}
+                                        onChange={(e) => { setValue("mrp", Number(e.target.value)) }}
+                                        placeholder="Enter MRP"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.mrp && <p style={{ color: 'red' }}>{errors.mrp.message}</p>}
+                                </div>
+                                <div className='mt-5'>
+                                    <input
+                                        value={Formquantity}
+                                        onChange={(e) => { setValue("quantity", Number(e.target.value)) }}
+                                        placeholder="Enter Quantity"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.quantity && <p style={{ color: 'red' }}>{errors.quantity.message}</p>}
                                 </div>
                             </div>
 
@@ -97,24 +143,61 @@ export default function page() {
                             <div className='col-span-2 '>
                                 <div>
                                     <input
-                                        value={Formage}
-                                        type='number'
-                                        onChange={(e) => { setValue("age", Number(e.target.value), { shouldValidate: true }) }}
-                                        placeholder="Enter age"
+                                        value={FormPrice}
+                                        onChange={(e) => { setValue("price", Number(e.target.value), { shouldValidate: true }) }}
+                                        placeholder="Enter Price"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                                     />
-                                    {errors.age && <p style={{ color: 'red' }}>{errors.age.message}</p>}
+                                    {errors.price && <p style={{ color: 'red' }}>{errors.price.message}</p>}
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        value={FormCountry}
-                                        onChange={(e) => { setValue("country", e.target.value) }}
-                                        placeholder="Enter State"
+                                        value={FormColour}
+                                        onChange={(e) => { setValue("color", e.target.value) }}
+                                        placeholder="Enter Color"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
                                     />
+                                    {errors.color && <p style={{ color: 'red' }}>{errors.color.message}</p>}
+
+                                </div>
+                                <div className='mt-5'>
+                                    <input
+                                        value={FormSize}
+                                        onChange={(e) => { setValue("size", Number(e.target.value)) }}
+                                        placeholder="Enter Size"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.size && <p style={{ color: 'red' }}>{errors.size.message}</p>}
+
+                                </div>
+
+                                <div className='mt-5'>
+                                    <input
+                                        value={Formdescription}
+                                        onChange={(e) => { setValue("description", e.target.value) }}
+                                        placeholder="Enter Description"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
+
+                                </div>
+                                <div className='mt-5'>
+                                    <input
+                                        value={FormType}
+                                        onChange={(e) => { setValue("type", e.target.value) }}
+                                        placeholder="Enter Type"
+                                        className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+                                    />
+                                    {errors.type && <p style={{ color: 'red' }}>{errors.type.message}</p>}
+
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className='w-full flex justify-center mt-4' >
+                        <button className='bg-[#105fa3] text-white px-6 py-2 rounded-md'>
+                            Submit
+                        </button>
                     </div>
                 </form>
             </div>
