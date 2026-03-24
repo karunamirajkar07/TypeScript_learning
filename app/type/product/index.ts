@@ -25,7 +25,6 @@ export interface ProductAPIPostRequest{
     category: string,
     price: number,
     mrp: number,
-    imageURL: string,
     brand: string,
     colour: string,
     size: number,

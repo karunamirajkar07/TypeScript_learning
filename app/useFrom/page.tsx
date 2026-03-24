@@ -5,54 +5,48 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCreateProductData } from '../hook/useMutation'
 import { ProductAPIPostRequest } from '../type/product'
+import toast from 'react-hot-toast'
 
 
-export default function page() {
+const FormValue = z.object({
+    title: z.string().trim()
+        .min(2, { message: "Title must be at least 2 characters" }),
 
-    const FormValue = z.object({
-        title: z.string().trim()
-            .min(2, { message: "Title must be at least 2 characters" }),
+    category: z.string().trim()
+        .min(1, { message: "Category is required" }),
 
-        category: z.string().trim()
-            .min(1, { message: "Category is required" }),
+    price: z.number()
+        .min(1, { message: "Price must be greater than 0" }),
 
-        price: z.number()
-            .min(1, { message: "Price must be greater than 0" }),
+    mrp: z.number()
+        .min(1, { message: "MRP must be greater than 0" }),
 
-        mrp: z.number()
-            .min(1, { message: "MRP must be greater than 0" }),
+    brand: z.string().trim()
+        .min(1, { message: "Brand is required" }),
 
-        brand: z.string().trim()
-            .min(1, { message: "Brand is required" }),
+    color: z.string().trim()
+        .min(1, { message: "Color is required" }),
 
-        color: z.string().trim()
-            .min(1, { message: "Color is required" }),
+    size: z.number()
+        .min(1, { message: "Size is required" }),
 
-        size: z.number()
-            .min(1, { message: "Size is required" }),
+    description: z.string()
+        .min(2, { message: "Description must be at least 2 characters" }),
 
-        description: z.string()
-            .min(2, { message: "Description must be at least 2 characters" }),
+    quantity: z.number()
+        .min(1, { message: "Quantity must be at least 1" }),
 
-        quantity: z.number()
-            .min(1, { message: "Quantity must be at least 1" }),
+    type: z.string().trim()
+        .min(1, { message: "Type is required" }),
+});
 
-        type: z.string().trim()
-            .min(1, { message: "Type is required" }),
-    });
-
-    type FormData = z.infer<typeof FormValue>
-
-    const productPayload = (): ProductAPIPostRequest => {
-
-    }
-
-    const { createProductsData } = useCreateProductData(productPayload)
-
+type FormData = z.infer<typeof FormValue>
+export default function ConfigureProduct() {
     const {
         setValue,
         handleSubmit,
         watch,
+        reset,
         formState: { errors }
     } = useForm<FormData>({
         resolver: zodResolver(FormValue),
@@ -81,13 +75,53 @@ export default function page() {
     const Formquantity = watch("quantity")
     const FormType = watch("type")
 
+    const { createProductsData } = useCreateProductData()
+
+    const onSubmit = (data : FormData) => {
+
+            const basePayload={
+                title: data.title,
+                category: data.category,
+                price: data.price,
+                mrp: data.mrp,
+                brand: data.brand,
+                colour: data.color,
+                size: data.size,
+                description: data.description,
+                quantity: data.quantity,
+                type: data.type
+    
+            }
+
+            createProductsData.mutate(basePayload,{
+                onSuccess:()=>{
+                    toast.success("Product Added Successfully.")
+                    alert("Product Added Successfully")
+                    reset({
+                        title: "",
+                        category: "",
+                        price: undefined,
+                        mrp: undefined,
+                        brand: "",
+                        color: "",
+                        size: undefined,
+                        description: "",
+                        quantity: undefined,
+                        type: ""
+                    })
+                }
+            })
+        
+
+    }
+
     return (
         <div>
             <div className='flex justify-center items-center m-4 bg-[#105fa3] text-white text-2xl h-[60px]'>
                 <h1>Use-Form Hook </h1>
             </div>
             <div className="">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='grid grid-cols-2 gap-5 m-5'>
                         <div className='grid grid-cols-4 '>
                             <div className='col-span-2 col-start-3'>
@@ -120,7 +154,8 @@ export default function page() {
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        value={FormMRP}
+                                        value={FormMRP ?? ''}
+                                        type='number'
                                         onChange={(e) => { setValue("mrp", Number(e.target.value)) }}
                                         placeholder="Enter MRP"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
@@ -129,7 +164,8 @@ export default function page() {
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        value={Formquantity}
+                                        value={Formquantity ??''}
+                                        type='number'
                                         onChange={(e) => { setValue("quantity", Number(e.target.value)) }}
                                         placeholder="Enter Quantity"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
@@ -143,7 +179,8 @@ export default function page() {
                             <div className='col-span-2 '>
                                 <div>
                                     <input
-                                        value={FormPrice}
+                                        value={FormPrice ?? ""}
+                                        type='number'
                                         onChange={(e) => { setValue("price", Number(e.target.value), { shouldValidate: true }) }}
                                         placeholder="Enter Price"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
@@ -153,6 +190,7 @@ export default function page() {
                                 <div className='mt-5'>
                                     <input
                                         value={FormColour}
+                                        type='text'
                                         onChange={(e) => { setValue("color", e.target.value) }}
                                         placeholder="Enter Color"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
@@ -162,7 +200,8 @@ export default function page() {
                                 </div>
                                 <div className='mt-5'>
                                     <input
-                                        value={FormSize}
+                                        value={FormSize ?? ""}
+                                        type='number'
                                         onChange={(e) => { setValue("size", Number(e.target.value)) }}
                                         placeholder="Enter Size"
                                         className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
@@ -195,7 +234,7 @@ export default function page() {
                         </div>
                     </div>
                     <div className='w-full flex justify-center mt-4' >
-                        <button className='bg-[#105fa3] text-white px-6 py-2 rounded-md'>
+                        <button  type="submit"className='bg-[#105fa3] text-white px-6 py-2 rounded-md cursor-pointer'>
                             Submit
                         </button>
                     </div>
