@@ -1,10 +1,10 @@
 import { APIEndPoints } from '@/app/endPoints'
-import { ProductAPIPostRequest } from '@/app/type/product'
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
+import { ProductAPIList, ProductAPIPostRequest, ProductAPIRequet } from '@/app/type/product'
+import { QueryClient, keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import React from 'react'
 
-export const useCreateProductData = () => {
+export const useCreateProductData = (request:ProductAPIRequet , id : string) => {
 
     const queryClient= useQueryClient()
 
@@ -18,8 +18,35 @@ export const useCreateProductData = () => {
 
     })
 
+    const productQuery = useQuery({
+        queryKey: ["product",request],
+        queryFn: async () => {
+            const res = await fetch(`${APIEndPoints.ProductAPI.GetByIdPRoduct}?${request}`)
+            return res.json()
+            
+        },
+        staleTime: 50000,
+        retry :3,
+        retryDelay: 100,
+        placeholderData : keepPreviousData
+    })
+
+    const getByIdProduct = useQuery({
+        queryKey:["getById", id],
+        queryFn: async () =>{
+            const res = await axios.get(`${APIEndPoints.ProductAPI.GetByIdPRoduct}/:${id}`)
+        }
+    })
+
     return {
         createProductsData: createProduct,
+
+        productData: productQuery.data,
+        isLoading: productQuery.isLoading,
+        error: productQuery.error,
+        isFetching : productQuery.isFetching,
+
+        productById : getByIdProduct.data
     }
      
     }

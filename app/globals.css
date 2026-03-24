@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tailwindcss";
+@import 'primeicons/primeicons.css';
+
 
 :root {
   --background: #ffffff;
