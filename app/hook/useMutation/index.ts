@@ -7,6 +7,7 @@ import React from 'react'
 export const useCreateProductData = (request : ProductAPIPostRequest) => {
 
     const queryClient= useQueryClient()
+
     const createProduct = useMutation({
         mutationFn : async ()=>{
            return await axios.post(APIEndPoints.ProductAPI.CreateProduct, request)
@@ -18,8 +19,7 @@ export const useCreateProductData = (request : ProductAPIPostRequest) => {
     })
 
     return {
-        
-        createProducts: createProduct
+        createProductsData: createProduct.data,
     }
      
     }
