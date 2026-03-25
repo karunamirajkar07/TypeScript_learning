@@ -25,17 +25,22 @@ export const useCreateProductData = (request:ProductAPIRequet , id : string) => 
             return res.json()
             
         },
-        staleTime: 50000,
+        enabled: true,
+        staleTime: 10 * 1000,
         retry :3,
         retryDelay: 100,
         placeholderData : keepPreviousData
     })
 
-    const getByIdProduct = useQuery({
+    const getByIdProduct = useQuery<ProductAPIList>({
         queryKey:["getById", id],
         queryFn: async () =>{
-            const res = await axios.get(`${APIEndPoints.ProductAPI.GetByIdPRoduct}/:${id}`)
-        }
+            const res = await axios.get(`${APIEndPoints.ProductAPI.ProductList}/${id}`)
+            return res.data;
+        },
+        enabled: !!id,
+
+        
     })
 
     return {
@@ -46,7 +51,7 @@ export const useCreateProductData = (request:ProductAPIRequet , id : string) => 
         error: productQuery.error,
         isFetching : productQuery.isFetching,
 
-        productById : getByIdProduct.data
+         productById: getByIdProduct.data
     }
      
     }

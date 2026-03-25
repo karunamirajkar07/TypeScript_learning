@@ -87,7 +87,7 @@ export default function ConfigureProduct() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const [debouncedSearch, setDebouncedSearch] = useState("");
-    const [editId , setEditId] = useState("")
+    const [editId, setEditId] = useState("")
 
     const payload = {
         page: page,
@@ -95,7 +95,8 @@ export default function ConfigureProduct() {
         search: debouncedSearch
     }
 
-    const { createProductsData , productData, productById} = useCreateProductData(payload , editId);
+    const { createProductsData, productData, productById } = useCreateProductData(payload, editId);
+
 
     const onSubmit = (data: FormData) => {
 
@@ -132,13 +133,29 @@ export default function ConfigureProduct() {
             }
         })
     }
-    const actionTemplete = (rowData : ProductAPIList) => {
-        console.log("datat==>",rowData)
-        setEditId(rowData.id)
-        return <button className='cursor-pointer'>
+    const actionTemplete = (rowData: ProductAPIList) => {
+        return <button
+            onClick={() => setEditId(rowData.id)}
+            className='cursor-pointer'>
             <i className="pi-user-edit text-white text-[20px] " ></i>
         </button>;
     }
+    React.useEffect(() => {
+        if (productById) {
+            reset({
+                title: productById.title,
+                category: productById.category,
+                price: productById.price,
+                mrp: productById.mrp,
+                brand: productById.brand,
+                color: productById.colour,
+                size: productById.size,
+                description: productById.description,
+                quantity: productById.quantity,
+                type: productById.type
+            });
+        }
+    }, [productById]); 
 
     return (
         <div>
@@ -278,7 +295,7 @@ export default function ConfigureProduct() {
             <div className="m-10">
                 <div className="shadow-lg rounded-xl overflow-hidden border">
                     <DataTable
-                        value={productData}
+                        value={Array.isArray(productData) ? productData : []}
                         stripedRows
                         showGridlines
                         scrollable
