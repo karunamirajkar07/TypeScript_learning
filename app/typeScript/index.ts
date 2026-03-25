@@ -45,3 +45,17 @@ employee1({
     joining_date: new Date(),
     expectation: 700000,
   });
+
+interface IAuthor <T>{
+    name: string,
+    age : number,
+    extra : T
+}
+
+function above (): IAuthor<string>{
+    return{
+       name : "karuna",
+        age : 12,
+        extra : "true"
+    }
+}
