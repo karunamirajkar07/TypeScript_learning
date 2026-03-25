@@ -22,3 +22,26 @@ function count (num: number , num1 : number, total ?: number ) {
 }
 
 count(1 , 2);
+
+type emp= {
+    name: string,
+    post: string,
+    salaryCTC: number,
+    joining_date : Date,
+    increment_date ?: Date,
+    expectation : number,
+}
+
+function employee1( emp : emp){
+    return {
+       emp    
+    }
+}
+
+employee1({
+    name: "karuna",
+    post: "Developer",
+    salaryCTC: 600000,
+    joining_date: new Date(),
+    expectation: 700000,
+  });
