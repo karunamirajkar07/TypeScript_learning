@@ -328,6 +328,9 @@ export default function ConfigureProduct() {
                             header="Brand"
                             style={{ minWidth: '140px' }} />
 
+
+
+
                         <Column
                             field="colour"
                             header="Color"
